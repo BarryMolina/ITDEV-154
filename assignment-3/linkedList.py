@@ -97,16 +97,14 @@ class LinkedList:
             while p.link != end:
                 q = p.link
                 if int(p.info) > int(q.info):
-                    temp = p.info
-                    p.info = q.info
-                    q.info = temp
+                    p.info, q.info = q.info, p.info
                 p = p.link
             end = p
 
     def bubble_sort_links(self):
         end = None
         while end != self.start.link:
-            p, r = self.start
+            p = r = self.start
             while p.link != end:
                 q = p.link
                 if int(p.info) > int(q.info):
@@ -116,9 +114,60 @@ class LinkedList:
                         r.link = q
                     else:
                         self.start = q
-                    temp = p
-                    p = q
-                    q = temp
+                    p, q = q, p
+                r = p
+                p = p.link
+            end = p
+
+    def insert_cycle(self, x):
+        p = self.start
+        px = prev = None
+        while p is not None:
+            if p.info == x:
+                px = p
+            prev = p
+            p = p.link
+        if px is not None:
+            prev.link = px
+
+    def find_cycle(self):
+        if (self.start is not None) and (self.start.link is not None):
+
+            slow = self.start
+            fast = self.start
+
+            while (fast is not None) and (fast.link is not None):
+                slow = slow.link
+                fast = fast.link.link
+                if slow == fast:
+                    return slow
+
+    def remove_cycle(self):
+        meet_node = self.find_cycle()
+        if (meet_node is None):
+            return
+        p = meet_node
+        q = meet_node
+        cycle_length = 0
+
+        # essentially a do-while loop
+        while True:
+            cycle_length += 1
+            q = q.link
+            if p == q:
+                break
+        remaining_length = 0
+        p = self.start
+        while p != q:
+            remaining_length += 1
+            p = p.link
+            q = q.link
+
+        list_length = cycle_length + remaining_length
+        p = self.start
+        for x in range(1, list_length):
+            p = p.link
+        p.link = None
 
 
 def show_old_new(func):
@@ -190,7 +239,41 @@ def reverse(list):
 
 @show_old_new
 def sort_data(list):
-    list.bubble_sort_data()
+    try:
+        list.bubble_sort_data()
+    except ValueError:
+        print("\nUnable to sort list containing strings")
+
+
+@show_old_new
+def sort_links(list):
+    try:
+        list.bubble_sort_links()
+    except ValueError:
+        print("\nUnable to sort list containing strings")
+
+
+def insert_cycle(list):
+    print("\nList:", end=" ")
+    display_list(list)
+    cycle_start = input("\nEnter value of node where cycle will be inserted: ")
+    list.insert_cycle(cycle_start)
+
+def detect_cycle(list):
+    if list.find_cycle() is None:
+        print("\nNo cycle detected")
+    else:
+        print("\nCycle detected")
+
+def remove_cycle(list):
+    if list.find_cycle() is None:
+        print("\nNo cycle detected")
+    else:
+        print("\nCycle detected")
+        list.remove_cycle()
+        print("\nCycle removed")
+        print("\nNew List:", end=" ")
+        display_list(list)
 
 
 options = [
@@ -203,12 +286,16 @@ options = [
     remove_last,
     remove_nth_position,
     reverse,
-    sort_data
+    sort_data,
+    sort_links,
+    insert_cycle,
+    detect_cycle,
+    remove_cycle
 ]
 
 def main_menu():
     my_list = LinkedList()
-    create_list(my_list, [4, 1, 8, 3, 0, 9, 2])
+    create_list(my_list, ["4", "1", "8", "3", "0", "9", "2"])
 
     while True:
         print(
@@ -224,7 +311,11 @@ def main_menu():
             "7: Remove element at end of list\n"
             "8: Remove element at nth position\n"
             "9: Reverse the list\n"
-            "10: Bubble sort by exchanging data"
+            "10: Bubble sort by exchanging data\n"
+            "11: Bubble sort by exchanging links\n"
+            "12: Insert cycle\n"
+            "13: Detect cycle\n"
+            "14: Remove cycle"
         )
         choice = int(input("\n>>> "))
         print()
