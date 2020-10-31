@@ -19,7 +19,44 @@ def factorial(num):
     return num * factorial(num - 1)
 
 def convert_base():
-    pass
+    while True:
+        print("\n\nEnter a number to convert or "
+                "\npress <enter> to return to the Main Menu")
+
+        ans = input("\n>>> ")
+        if not ans:
+            break
+        num = int(ans)
+
+        print(f"\n\nBinary Form: {converted(num, 2)}")
+        print(f"Octal Form: {converted(num, 8)}")
+        print(f"Hexadecimal Form: {converted(num, 16)}")
+
+
+def converted(num, base):
+    converted_list = []
+    convert(num, base, converted_list)
+
+    # list comprehension to create list of strings
+    converted_str = [str(digit) for digit in converted_list]
+
+    return ''.join(converted_str)
+
+
+def convert(num, base, converted):
+    if num == 0:
+        return
+
+    # integer division
+    new_num = num // base
+    convert(new_num, base, converted)
+    rem = num % base
+    if rem < 10:
+        converted.append(rem)
+    else:
+        # convert number to letter if over 10
+        converted.append(chr(rem - 10 + ord('A')))
+
 
 def gcd():
     pass
