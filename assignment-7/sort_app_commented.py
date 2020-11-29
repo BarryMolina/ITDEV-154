@@ -12,6 +12,27 @@ def reset(alist):
     alist = [8, 9, 1, 5, 3, 10, 2, 8]
     print(f"Current list: {alist}")
     input("\n\n Press <enter> to return to the Main Menu")
+# def fill_list(alist):
+#     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+#     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+#     if len(alist) > 0:
+#         print(f"Current list: {alist}")
+#     while True:
+#         print("\nEnter a value to insert or"
+#                 "\npress <enter> to return to the Main Menu")
+
+#         ans = input("\n>>> ")
+#         if not ans:
+#             break
+
+#         try:
+#             num = int(ans)
+#             alist.append(num)
+#         except Exception as ex:
+#             print(f"\n{ex}")
+#         finally:
+#             print(f"\nCurrent list: \n{alist}")
+
 
 def selection_sort(alist):
     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -54,6 +75,34 @@ def bubble_sort(alist):
     print(f"Sorted list: {alist}")
 
     input("\n\n Press <enter> to return to the Main Menu")
+
+
+def randomize(alist):
+    pass
+
+def clear(alist):
+    pass
+
+# def delete_node(tree):
+#     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+#     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+#     print(f"\nCurrent tree: \n{tree}")
+#     while True:
+#         print("\n\nEnter a value to delete or"
+#                 "\npress <enter> to return to the Main Menu")
+
+#         ans = input("\n>>> ")
+#         if not ans:
+#             break
+
+#         try:
+#             num = int(ans)
+#             tree.delete(num)
+#             print(f"\n{num} deleted from tree.")
+#         except Exception as ex:
+#             print(f"\n{ex}")
+#         finally:
+#             print(f"\nCurrent tree: \n{tree}")
 
 
 options = [
