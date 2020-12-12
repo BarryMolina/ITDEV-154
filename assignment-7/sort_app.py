@@ -9,7 +9,7 @@ def display_list(alist):
 def reset(alist):
     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
     print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-    alist = [8, 9, 1, 5, 3, 10, 2, 8]
+    alist[:] = [8, 9, 1, 5, 3, 10, 2, 8]
     print(f"Current list: {alist}")
     input("\n\n Press <enter> to return to the Main Menu")
 
