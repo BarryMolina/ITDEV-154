@@ -9,17 +9,20 @@ class Node:
 
     def __repr__(self):
         return (
-            f'{self.fname:.<20}'
-            f'{self.lname:.<20}'
-            f'{self.age:.>10}'
-            f'{self.salary:.>20,}'
-            f'{self.id:4}'
+            f"{self.fname:.<20}"
+            f"{self.lname:.<20}"
+            f"{self.age:.>10}"
+            f"{self.salary:.>20,}"
+            # f"{self.id:4}"
         )
 
-class LinkedList:
+class RosterLL:
     def __init__(self, nodes=None):
+        # a unique id for each node
         self.counter = 1
         self.head = None
+
+        # pre-load linked list from nodes
         if nodes is not None:
             data = nodes.pop(0)
             node = Node(self.counter, *data)
@@ -30,62 +33,23 @@ class LinkedList:
                 self.counter += 1
                 node = node.next
 
-    # object representation
-    # def __repr__(self):
-    #     node = self.head
-    #     nodes = []
-    #     while node is not None:
-    #         nodes.append(repr(node))
-    #         node = node.next
-    #     nodes.append("None")
-    #     return " -> ".join(nodes)
-
     def __iter__(self):
         node = self.head
         while node is not None:
             yield node
             node = node.next
 
-    def add_first(self, node):
-        node.next = self.head
-        self.head = node
-
-    def add_last(self, node):
+    def add_employee(self, data):
+        node = Node(self.counter, *data)    # unpack values in data list
         if not self.head:
             self.head = node
             return
-        for current_node in self:
+        for current_node in self:           # get to end of list
             pass
-        current_node.next = node
+        current_node.next = node            # add new node
 
-    def add_after(self, target_node_data, new_node):
-        if not self.head:
-            raise Exception("List is empty")
+        self.counter += 1                   # increment counter
 
-        for node in self:
-            if node.data == target_node_data:
-                new_node.next = node.next
-                node.next = new_node
-                return
-
-        raise Exception(f"Node with data '{target_node_data}' not found")
-
-    def add_before(self, target_node_data, new_node):
-        if not self.head:
-            raise Exception("List is empty")
-
-        if self.head.data == target_node_data:
-            return self.add_first(new_node)
-
-        prev_node = self.head
-        for node in self:
-            if node.data == target_node_data:
-                prev_node.next = new_node
-                new_node.next = node
-                return
-            prev_node = node
-
-        raise Exception(f"Node with data '{target_node_data}' not found")
 
     def remove_node(self, target_node_id):
         if not self.head:
@@ -103,3 +67,84 @@ class LinkedList:
             previous_node = node
 
         raise Exception("Node not found")
+
+    # search methods
+    def search_fname(self, fname):
+        results = []
+        node = self.head
+        for node in self:
+            if node.fname == fname:
+                results.append(node)
+        return results
+
+    def search_lname(self, lname):
+        results = []
+        node = self.head
+        for node in self:
+            if node.lname == lname:
+                results.append(node)
+        return results
+
+    def search_age(self, age):
+        results = []
+        node = self.head
+        for node in self:
+            if node.age == age:
+                results.append(node)
+        return results
+
+    def search_salary(self, salary):
+        results = []
+        node = self.head
+        for node in self:
+            if node.salary == salary:
+                results.append(node)
+        return results
+    
+    # filter methods
+    def fname_startswith(self, letter):
+        subList = []
+        node = self.head
+        for node in self:
+            if node.fname.startswith(letter):
+                subList.append(node)
+        return subList
+
+    def lname_startswith(self, letter):
+        subList = []
+        node = self.head
+        for node in self:
+            if node.lname.startswith(letter):
+                subList.append(node)
+        return subList
+
+    def age_at_or_above(self, age):
+        subList = []
+        node = self.head
+        for node in self:
+            if node.age >= age:
+                subList.append(node)
+            node = node.next
+        return subList
+    def age_at_or_below(self, age):
+        subList = []
+        node = self.head
+        for node in self:
+            if node.age <= age:
+                subList.append(node)
+        return subList
+    def salary_at_or_above(self, salary):
+        subList = []
+        node = self.head
+        for node in self:
+            if node.salary >= salary:
+                subList.append(node)
+        return subList
+    def salary_at_or_below(self, salary):
+        subList = []
+        node = self.head
+        for node in self:
+            if node.salary <= salary:
+                subList.append(node)
+        return subList
+

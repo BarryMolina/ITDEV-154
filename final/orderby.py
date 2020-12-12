@@ -1,4 +1,5 @@
-def sort_fname(alist, asc=False):
+# Big O of n^2
+def order_fname(alist, asc=False):
     newlist = alist
     if asc:
         for x in range(len(newlist) - 1, -1, -1):
@@ -23,7 +24,7 @@ def sort_fname(alist, asc=False):
     return newlist
 
 
-def sort_lname(alist, asc=False):
+def order_lname(alist, asc=False):
     newlist = alist
     if asc:
         for x in range(len(newlist) - 1, -1, -1):
@@ -47,7 +48,7 @@ def sort_lname(alist, asc=False):
                 break
     return newlist
 
-def sort_age(alist, asc=False):
+def order_age(alist, asc=False):
     newlist = alist
     if asc:
         for x in range(len(newlist) - 1, -1, -1):
@@ -71,7 +72,7 @@ def sort_age(alist, asc=False):
                 break
     return newlist
 
-def sort_salary(alist, asc=False):
+def order_salary(alist, asc=False):
     newlist = alist
     if asc:
         for x in range(len(newlist) - 1, -1, -1):
@@ -96,9 +97,9 @@ def sort_salary(alist, asc=False):
     return newlist
 
 
-sort_by = [
-    sort_fname,
-    sort_lname,
-    sort_age,
-    sort_salary
+order_by = [
+    order_fname,
+    order_lname,
+    order_age,
+    order_salary
 ]
