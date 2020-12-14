@@ -39,6 +39,7 @@ class RosterLL:
             yield node
             node = node.next
 
+    # Big O of N to get to end of list, big O of (1) for add
     def add_employee(self, data):
         node = Node(self.counter, *data)    # unpack values in data list
         if not self.head:
@@ -51,6 +52,7 @@ class RosterLL:
         self.counter += 1                   # increment counter
 
 
+    # Big O of N for search, Big O of (1) for delete
     def remove_node(self, target_node_id):
         if not self.head:
             raise Exception("List is empty")
@@ -68,7 +70,7 @@ class RosterLL:
 
         raise Exception("Node not found")
 
-    # search methods
+    # search methods Big O of N
     def search_fname(self, fname):
         results = []
         node = self.head
@@ -101,7 +103,7 @@ class RosterLL:
                 results.append(node)
         return results
     
-    # filter methods
+    # filter methods Big O of N
     def fname_startswith(self, letter):
         subList = []
         node = self.head

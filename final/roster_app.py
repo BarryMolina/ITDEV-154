@@ -2,9 +2,15 @@ from roster import RosterLL
 import orderby as o
 
 employees = [
-    ["Barry", "Molina", 27, 100000],
-    ["Justin", "Beiber", 25, 50000],
-    ["George", "Washington", 350, 1000000]
+    ["Barry", "Molina", 29, 100000],
+    ["Thomas", "McClaren", 44, 90000],
+    ["Abby", "Nobody", 33, 75000],
+    ["John", "Smith", 48, 88000],
+    ["Oliver", "Twist", 12, 20],
+    ["James", "John", 27, 50000],
+    ["Jeremy", "John", 38, 120000],
+    ["Betty", "Nobody", 31, 95000],
+    ["Usain", "Bolt", 34, 10000000],
 ]
 
 rosterll = RosterLL(nodes=employees)
@@ -16,9 +22,10 @@ def display_all():
 
 
 
-def display(alist):
-    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+def display(alist, header=None):
+    newscreen()
+    if header:
+        print(f"{header}\n\n")
     if not alist:
         input("\n\nThere are no items in this list"
             "\npress <enter> to return to the previous menu\n\n")
@@ -40,67 +47,75 @@ def display(alist):
           "2: Sort in Ascending Order\n"
           "3: Sort in Descending Order"
           )
-    ans = input("\n>>> ")
-    if ans == "1":
-        while True:
-            print("\n\nEnter the line number of employee to remove or"
-                  "\npress <enter> to cancel")
-            select = input("\n>>> ")
-            if not select:
-                newlist = alist
-                break
-            if not select.isnumeric or int(select) > len(alist):
-                print("\nInvalid selection")
-            else:
-                try:
-                    num = int(select)
-                    rosterll.remove_node(alist[num-1].id)
-                    alist.pop(num-1)                        # remove item from list
+    while True:
+        ans = input("\n>>> ")
+        if not ans:
+            break
+        if not ans.isnumeric() or int(ans) > 3:
+            print("\nInvalid selection")
+            continue
+        if ans == "1":
+            while True:
+                print("\n\nEnter the line number of employee to remove or"
+                    "\npress <enter> to cancel")
+                select = input("\n>>> ")
+                if not select:
                     newlist = alist
                     break
-                except Exception as ex:
-                    print(f"\n{ex}")
-    elif ans == "2":
-        while True:
-            print("\n\nSelect attribute to sort by or"
-                  "\npress <enter> to return to the List Menu\n\n"
-                  "1: First Name\n"
-                  "2: Last Name\n"
-                  "3: Age\n"
-                  "4: Salary\n"
-                  )
-            select = input("\n>>> ")
-            if not select:
-                newlist = alist
-                break
-            if not select.isnumeric or int(select) > 4:
-                print("\nInvalid selection")
-            else:
-                newlist = o.order_by[int(select)-1](alist, asc=True)
-                break
-    elif ans == "3":
-        while True:
-            print("\n\nSelect attribute to sort by or"
-                  "\npress <enter> to return to the List Menu\n\n"
-                  "1: First Name\n"
-                  "2: Last Name\n"
-                  "3: Age\n"
-                  "4: Salary\n"
-                  )
-            select = input("\n>>> ")
-            if not select:
-                newlist = alist
-                break
-            if not select.isnumeric or int(select) > 4:
-                print("\nInvalid selection")
-            else:
-                newlist = o.order_by[int(select)-1](alist, asc=False)
-                break
+                if not select.isnumeric() or int(select) > len(alist):
+                    print("\nInvalid selection")
+                else:
+                    try:
+                        num = int(select)
+                        rosterll.remove_node(alist[num-1].id)
+                        alist.pop(num-1)                        # remove item from list
+                        newlist = alist
+                        break
+                    except Exception as ex:
+                        print(f"\n{ex}")
+            break
+        elif ans == "2":
+            while True:
+                print("\n\nSelect attribute to sort by or"
+                    "\npress <enter> to return to the List Menu\n\n"
+                    "1: First Name\n"
+                    "2: Last Name\n"
+                    "3: Age\n"
+                    "4: Salary\n"
+                    )
+                select = input("\n>>> ")
+                if not select:
+                    newlist = alist
+                    break
+                if not select.isnumeric() or int(select) > 4:
+                    print("\nInvalid selection")
+                else:
+                    newlist = o.order_by[int(select)-1](alist, asc=True)
+                    break
+            break
+        elif ans == "3":
+            while True:
+                print("\n\nSelect attribute to sort by or"
+                    "\npress <enter> to return to the List Menu\n\n"
+                    "1: First Name\n"
+                    "2: Last Name\n"
+                    "3: Age\n"
+                    "4: Salary\n"
+                    )
+                select = input("\n>>> ")
+                if not select:
+                    newlist = alist
+                    break
+                if not select.isnumeric() or int(select) > 4:
+                    print("\nInvalid selection")
+                else:
+                    newlist = o.order_by[int(select)-1](alist, asc=False)
+                    break
+            break
     return newlist
 
 def add_employee():
-    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-    print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+    newscreen()
     print("\n\nEnter Employee info or"
         "\npress <enter> at anytime to cancel")
     fname = input("\nFirst Name: ")
@@ -125,9 +140,11 @@ def add_employee():
 
 
 def search_menu():
+    def header(numresults):
+        return f"Your search returned {numresults} result{'s' if numresults > 1 else ''}" 
+
     while True:
-        print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-        print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+        newscreen()
         print("\n\nSelect attribute to search by or"
             "\npress <enter> to return to the Main Menu\n\n"
             "1: First Name \n"
@@ -139,12 +156,11 @@ def search_menu():
         if not select:
             break
 
-        if not select.isnumeric or int(select) > 4:
+        if not select.isnumeric() or int(select) > 4:
             print("\nInvalid selection")
             continue
         else:
-            print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-            print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+            newscreen()
 
         if select == "1":
             print("\n\nEnter a First Name or"
@@ -153,7 +169,7 @@ def search_menu():
             if fname:
                 result = rosterll.search_fname(fname)
                 while result is not None:
-                    result = display(result)
+                    result = display(result, header=header(len(result)))
                     
         elif select == "2":
             print("\n\nEnter a Last Name or"
@@ -162,7 +178,7 @@ def search_menu():
             if lname:
                 result = rosterll.search_lname(lname)
                 while result is not None:
-                    result = display(result)
+                    result = display(result, header=header(len(result)))
 
         elif select == "3":
             print("\n\nEnter an age or"
@@ -171,7 +187,7 @@ def search_menu():
             if age:
                 result = rosterll.search_age(int(age))
                 while result is not None:
-                    result = display(result)
+                    result = display(result, header=header(len(result)))
                     
         elif select == "4":
             print("\n\nEnter a salary or"
@@ -180,12 +196,14 @@ def search_menu():
             if salary:
                 result = rosterll.search_salary(int(salary))
                 while result is not None:
-                    result = display(result)
+                    result = display(result, header=header(len(result)))
 
 def filter_menu():
+    def header(numresults):
+        return f"The filter returned {numresults} result{'s' if numresults > 1 else ''}" 
+
     while True:
-        print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-        print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+        newscreen()
         print("\n\nSelect attribute to filter by or"
             "\npress <enter> to return to the Main Menu\n\n"
             "1: First Name \n"
@@ -197,12 +215,11 @@ def filter_menu():
         if not select:
             break
 
-        if not select.isnumeric or int(select) > 4:
+        if not select.isnumeric() or int(select) > 4:
             print("\nInvalid selection")
             continue
         else:
-            print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
-            print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
+            newscreen()
 
         if select == "1":
             print("\n\nEnter a starting letter or"
@@ -211,7 +228,7 @@ def filter_menu():
             if char:
                 result = rosterll.fname_startswith(char[0])
                 while result is not None:
-                    result = display(result)
+                    result = display(result, header=header(len(result)))
 
         elif select == "2":
             print("\n\nEnter a starting letter or"
@@ -220,11 +237,11 @@ def filter_menu():
             if char:
                 result = rosterll.lname_startswith(char[0])
                 while result is not None:
-                    result = display(result)
+                    result = display(result, header=header(len(result)))
 
         elif select == "3":
             while True:
-                print("\n\nSelect an option to filter by or"
+                print("\n\nSelect type of filter or"
                     "\npress <enter> to return to the Filter Menu\n\n"
                     "1: Greater than or equal to a given age\n"
                     "2: Less than or equal to a given age\n"
@@ -232,7 +249,7 @@ def filter_menu():
                 select = input("\n>>> ")
                 if not select:
                     break
-                if not select.isnumeric or int(select) > 2:
+                if not select.isnumeric() or int(select) > 2:
                     print("\nInvalid selection")
                 elif select == "1":
                     print("\n\nEnter age to filter by or"
@@ -241,7 +258,7 @@ def filter_menu():
                     if age:
                         result = rosterll.age_at_or_above(int(age))
                         while result is not None:
-                            result = display(result)
+                            result = display(result, header=header(len(result)))
                     break
 
                 elif select == "2":
@@ -251,12 +268,12 @@ def filter_menu():
                     if age:
                         result = rosterll.age_at_or_below(int(age))
                         while result is not None:
-                            result = display(result)
+                            result = display(result, header=header(len(result)))
                     break
 
         elif select == "4":
             while True:
-                print("\n\nSelect an option to filter by or"
+                print("\n\nSelect type of filter or"
                     "\npress <enter> to return to the Filter Menu\n\n"
                     "1: Greater than or equal to a given salary\n"
                     "2: Less than or equal to a given salary\n"
@@ -264,7 +281,7 @@ def filter_menu():
                 select = input("\n>>> ")
                 if not select:
                     break
-                if not select.isnumeric or int(select) > 2:
+                if not select.isnumeric() or int(select) > 2:
                     print("\nInvalid selection")
                 elif select == "1":
                     print("\n\nEnter salary to filter by or"
@@ -273,7 +290,7 @@ def filter_menu():
                     if salary:
                         result = rosterll.salary_at_or_above(int(salary))
                         while result is not None:
-                            result = display(result)
+                            result = display(result, header=header(len(result)))
                     break
 
                 elif select == "2":
@@ -283,18 +300,19 @@ def filter_menu():
                     if salary:
                         result = rosterll.salary_at_or_below(int(salary))
                         while result is not None:
-                            result = display(result)
+                            result = display(result, header=header(len(result)))
                     break
 
+def newscreen():
+    print(
+        "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+        "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+    )
 def main():
-    # options = [
-    #     display_list,
-    # ]
     quit = False
     while not quit:
+        newscreen()
         print(
-            "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
-            "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
             "Welcome to the CompanyRoster app.\n"
             "\nPlease select one of the following options:\n"
             "1: Display Roster\n"
@@ -303,22 +321,22 @@ def main():
             "4: Filter Roster\n"
             "\n0: Quit\n"
         )
-        choice = int(input("\n>>> "))
-        print()
+        choice = input("\n>>> ")
 
-        if choice == 0:
+        while not choice or not choice.isnumeric() or int(choice) > 4:
+            print("\nInvalid selection")
+            choice = input("\n>>> ")
+
+        if choice == "0":
             quit = True
-        elif choice == 1:
+        elif choice == "1":
             display_all()
-        elif choice == 2:
+        elif choice == "2":
             add_employee()
-        elif choice == 3:
+        elif choice == "3":
             search_menu()
-        elif choice == 4:
+        elif choice == "4":
             filter_menu()
-
-        # else:
-        #     options[choice-1](rosterll)
 
 
 if __name__ == "__main__":
